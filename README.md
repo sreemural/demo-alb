@@ -5,16 +5,21 @@ To deploy via github action there should be an IAM role with trusted entity poli
 Below is the policy
 
 {
-  "Effect": "Allow",
-  "Principal": {
-    "Federated": "arn:aws:iam::<ACCOUNT_ID>:oidc-provider/token.actions.githubusercontent.com"
-  },
-  "Action": "sts:AssumeRoleWithWebIdentity",
-  "Condition": {
-    "StringLike": {
-      "token.actions.githubusercontent.com:sub": "repo:sreemural/demo-alb:ref:refs/heads/main"
-    }
-  }
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::<Account_ID>:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringLike": {
+                    "token.actions.githubusercontent.com:sub": "repo:sreemural/demo-alb:ref:refs/heads/main"
+                }
+            }
+        }
+    ]
 }
 
-For github to connect to AWS we have to create a provider in IAM and assign the role to it
+For github to connect to AWS we have to create a provider in IAM and assign the role to it.
