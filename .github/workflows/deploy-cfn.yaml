@@ -24,12 +24,13 @@ jobs:
     - name: Deploy CloudFormation Stack
       run: |
         aws cloudformation deploy \
-          --template-file templates/alb.yaml  \
+          --template-file templates/alb.yaml \
           --stack-name demo-alb \
           --capabilities CAPABILITY_NAMED_IAM \
           --parameter-overrides \
-            VpcId=vpc-xxxxxxxx \
-            Subnet1=subnet-aaaaaaa \
-            Subnet2=subnet-bbbbbbb \
-            KeyName=my-ec2-keypair \
-            AMIId=ami-0c2b8ca1dad447f8a
+            VpcId=${{ secrets.AWS_VPC_ID }} \
+            Subnet1=${{ secrets.AWS_SUBNET1_ID }} \
+            Subnet2=${{ secrets.AWS_SUBNET2_ID }} \
+            KeyName=${{ secrets.AWS_KEY_PAIR }} \
+            AMIId=${{ secrets.AWS_AMI_ID }}
+
