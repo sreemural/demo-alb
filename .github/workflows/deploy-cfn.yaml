@@ -24,8 +24,8 @@ jobs:
     - name: Deploy CloudFormation Stack
       run: |
         aws cloudformation deploy \
-          --template-file path/to/your-template.yaml \
-          --stack-name alb-ec2-autoscaling \
+          --template-file templates/alb.yaml  \
+          --stack-name demo-alb \
           --capabilities CAPABILITY_NAMED_IAM \
           --parameter-overrides \
             VpcId=vpc-xxxxxxxx \
