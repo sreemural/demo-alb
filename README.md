@@ -1,7 +1,9 @@
 # demo-alb
 This repo has CFT template for ALB and GH action pipeline syntax for deployment
+
 To deploy via github action there should be an IAM role with trusted entity policy and AWS full access to Cloud formation
 Below is the policy
+
 {
   "Effect": "Allow",
   "Principal": {
