@@ -1,0 +1,35 @@
+name: Deploy CloudFormation Stack
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials (OIDC)
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::203918855499:role/alb-cft-role
+        aws-region: us-east-1
+
+    - name: Deploy CloudFormation Stack
+      run: |
+        aws cloudformation deploy \
+          --template-file path/to/your-template.yaml \
+          --stack-name alb-ec2-autoscaling \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --parameter-overrides \
+            VpcId=vpc-xxxxxxxx \
+            Subnet1=subnet-aaaaaaa \
+            Subnet2=subnet-bbbbbbb \
+            KeyName=my-ec2-keypair \
+            AMIId=ami-0c2b8ca1dad447f8a
