@@ -21,15 +21,24 @@ jobs:
         role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/demo-alb-cft
         aws-region: us-east-1
 
-    - name: Deploy CloudFormation Stack
+    - name: Echo parameter values
       run: |
-        aws cloudformation deploy \
-          --template-file templates/alb.yaml \
-          --stack-name demo-alb \
-          --capabilities CAPABILITY_NAMED_IAM \
-          --parameter-overrides \
-            VpcId=${{ secrets.AWS_VPC_ID }} \
-            Subnet1=${{ secrets.AWS_SUBNET1_ID }} \
-            Subnet2=${{ secrets.AWS_SUBNET2_ID }} \
-            KeyName=${{ secrets.AWS_KEY_PAIR }} \
-            AMIId=${{ secrets.AWS_AMI_ID }}
+        echo "VpcId=${{ secrets.AWS_VPC_ID }}"
+        echo "Subnet1=${{ secrets.AWS_SUBNET1_ID }}"
+        echo "Subnet2=${{ secrets.AWS_SUBNET2_ID }}"
+        echo "KeyName=${{ secrets.AWS_KEY_PAIR }}"
+        echo "AMIId=${{ secrets.AWS_AMI_ID }}"
+
+    - name: Deploy CloudFormation stack
+      run: |
+       aws cloudformation deploy \
+        --template-file templates/alb.yaml \
+        --stack-name demo-alb \
+        --capabilities CAPABILITY_NAMED_IAM \
+        --parameter-overrides \
+          VpcId=${{ secrets.AWS_VPC_ID }} \
+          Subnet1=${{ secrets.AWS_SUBNET1_ID }} \
+          Subnet2=${{ secrets.AWS_SUBNET2_ID }} \
+          KeyName=${{ secrets.AWS_KEY_PAIR }} \
+          AMIId=${{ secrets.AWS_AMI_ID }} \
+        --debug
