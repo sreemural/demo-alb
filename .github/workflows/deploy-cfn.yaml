@@ -18,7 +18,7 @@ jobs:
     - name: Configure AWS Credentials (OIDC)
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/demo-alb-cft-role
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/demo-alb-cft
         aws-region: us-east-1
 
     - name: Deploy CloudFormation Stack
@@ -33,4 +33,3 @@ jobs:
             Subnet2=${{ secrets.AWS_SUBNET2_ID }} \
             KeyName=${{ secrets.AWS_KEY_PAIR }} \
             AMIId=${{ secrets.AWS_AMI_ID }}
-
